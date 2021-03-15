@@ -47,12 +47,23 @@ var router = express.Router();
 // }
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
-);
-const connection = mongoose.connection;
-connection.once('open', () => {
-    console.log("MongoDB database connection established successfully");
-})
+// mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
+// );
+// const connection = mongoose.connection;
+// connection.once('open', () => {
+//     console.log("MongoDB database connection established successfully");
+// })
+
+mongoose.Promise = global.Promise;
+
+//mongoose.connect(process.env.DB, { useNewUrlParser: true });
+try {
+    mongoose.connect( uri, {useNewUrlParser: true, useUnifiedTopology: true}, () =>
+        console.log("connected"));
+}catch (error) {
+    console.log("could not connect");
+}
+mongoose.set('useCreateIndex', true);
 //
 // router.post('/signup', function(req, res) {
 //     if (!req.body.username || !req.body.password) {
