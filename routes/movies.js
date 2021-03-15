@@ -7,7 +7,7 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => {
+router.route('/').post((req, res) => {
     const title = req.body.title;
     const yearReleased = req.body.yearReleased;
     const genre = req.body.genre;
@@ -24,29 +24,31 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').get((req, res) => {
-    Movie.findById(req.params.id)
+router.route('/:title').get((req, res) => {
+    Movie.find({title: req.params.title})
         .then(movie => res.json(movie))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').delete((req, res) => {
-    Movie.findByIdAndDelete(req.params.id)
+router.route('/').delete((req, res) => {
+    Movie.deleteOne({title: req.body.title})
         .then(() => res.json('Movie deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').post((req, res) => {
-    Movie.findById(req.params.id)
+router.route('/').put((req, res) => {
+    Movie.find({title: req.body.title})
         .then(movie => {
-            movie.title = req.body.title;
-            movie.yearReleased = req.body.yearReleased;
-            movie.genre = req.body.genre;
-            movie.actors = req.body.actors;
-
-            movie.save()
+            newMovie = new Movie({
+                title: req.body.title,
+                yearReleased: req.body.yearReleased,
+                genre: req.body.genre,
+                actors: req.body.actors
+            });
+            newMovie.save()
                 .then(() => res.json('Movie updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
+            Movie.deleteOne({title: req.body.title})
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
