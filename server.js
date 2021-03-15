@@ -69,7 +69,7 @@ const moviesRouter = require('./routes/movies');
 const usersRouter = require('./routes/users');
 const path = require("path");
 
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 
 
 // app.get('/', (req, res) => {
@@ -78,12 +78,12 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use('/movies', moviesRouter);
 app.use('/users', usersRouter);
 
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 
 
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 app.listen(process.env.PORT || 8080);
 module.exports = app; // for testing only
 
