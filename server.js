@@ -8,7 +8,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 //var authController = require('./auth');
-//var authJwtController = require('./auth_jwt');
+// var authJwtController = require('./auth_jwt');
 var jwt = require('jsonwebtoken');
 var cors = require('cors');
 var User = require('./models/Users');
@@ -28,23 +28,7 @@ app.use(passport.initialize());
 
 var router = express.Router();
 
-// function getJSONObjectForMovieRequirement(req) {
-//     var json = {
-//         headers: "No headers",
-//         key: process.env.UNIQUE_KEY,
-//         body: "No body"
-//     };
-//
-//     if (req.body != null) {
-//         json.body = req.body;
-//     }
-//
-//     if (req.headers != null) {
-//         json.headers = req.headers;
-//     }
-//
-//     return json;
-// }
+
 
 const uri = process.env.ATLAS_URI;
 // mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
@@ -67,7 +51,7 @@ mongoose.set('useCreateIndex', true);
 
 const moviesRouter = require('./routes/movies');
 const usersRouter = require('./routes/users');
-const path = require("path");
+//const path = require("path");
 
 // app.use(express.static(path.join(__dirname, 'build')));
 

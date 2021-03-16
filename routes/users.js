@@ -5,20 +5,11 @@ const jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 //var authController = require('./auth');
-//var authJwtController = require('./auth_jwt');
+//var authJwtController = require('../auth_jwt');
 //db = require('./db')(); //hack
 //var jwt = require('jsonwebtoken');
-var cors = require('cors');
+// var cors = require('cors');
 const bcrypt = require("bcrypt-nodejs");
-
-//var app = express();
-//app.use(cors());
-//app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: false }));
-
-//app.use(passport.initialize());
-
-//var router = express.Router();
 
 
 
@@ -26,7 +17,7 @@ router.post('/signup', function(req, res) {
     if (!req.body.name || !req.body.username || !req.body.password) {
         res.json({success: false, msg: 'Please include name, username and password to signup.'})
     } else {
-        console.log("inside the first else");
+        //console.log("inside the first else");
         // User = {
         //     username: req.body.username,
         //     password: req.body.password
@@ -38,7 +29,7 @@ router.post('/signup', function(req, res) {
                 let errors = {};
                 if(user) {
                     if(user.username === req.body.username){
-                        errors.username = "User Name already exists";
+                        errors.username = "already exists";
                     }
                     return res.status(400).json(errors);
                 }
@@ -53,13 +44,13 @@ router.post('/signup', function(req, res) {
                         createdUser.save()
                     } catch (err) {
                     }
-                    let token;
-                    token = jwt.sign(
-                        {userId: createdUser.id, email: createdUser.username},
-                        'supersecretkey',
+                    // let token;
+                    // token = jwt.sign(
+                    //     {name: createdUser.name, email: createdUser.username},
+                    //     process.env.SECRET_KEY
                         // { expiresIn: '1h' });
-                    );
-                    res.status(201).json({token: token, userId: createdUser.id});
+                    // );
+                    res.status(201).json({ success: true, msg: 'Successfully created new user.'});
 
                     // db.save(newUser); //no duplicate checking
                     // res.json({success: true, msg: 'Successfully created new user.'})
@@ -112,7 +103,7 @@ router.post('/signin', function (req, res) {
                                     console.log("user exists");
                                     let token;
                                     token = jwt.sign(
-                                        { userId: user.id, username: user.username },
+                                        { name: user.name, email: user.username },
                                         process.env.SECRET_KEY,
                                         //{ expiresIn: '1h' }
                                     );
